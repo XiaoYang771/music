@@ -1,38 +1,49 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import HomeMusicNav from './HomeMusicNav.vue';
 </script>
 
 <template>
     <div class="content">
-        <div class="contentvideo">
-            <video class="bg-video" autoplay muted loop playsinline>
-                <source src="../assets/bg.mp4" type="video/mp4">
-            </video>
+        <video class="bg-video" autoplay muted loop playsinline>
+            <source src="/video/bg.mp4" type="video/mp4">
+        </video>
+        <div class="contenttext">
+             <!-- <div style="height: 2000px;"></div> -->
+              <HomeMusicNav></HomeMusicNav>
+              <router-view></router-view>
         </div>
-        <router-view></router-view>
     </div>
 </template>
 
 <style scoped lang="scss">
     .content{
+        position: relative;
         width: 78%;
         height: 96%;
         margin: 1% 0;
         border-radius: 0 20px 20px 0;
-        overflow-y: scroll;
-        // background-color: chartreuse;
-        .contentvideo{
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
             .bg-video{
+                position: absolute;
+                display: block;
+                width: 1000px;
+                height: 672px;
+                transform: scaleY(1.2);
+                opacity: 0.3;
+            }
+            .contenttext{
                 position: absolute;
                 width: 100%;
                 height: 100%;
-                transform: scaleY(1.2);
-                // z-index: -1; /* 视频层级低于内容，确保内容可见 */
+                overflow-y: scroll;
+                z-index: 10;
+                background-color: rgba(0,0,0,0.3);
+            }
+            .contenttext::-webkit-scrollbar {
+                display: none;
             }
         }
-    }
+        router-view {
+            overflow: visible !important;
+        }
 </style>

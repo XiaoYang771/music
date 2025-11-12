@@ -5,11 +5,12 @@ import { RouterLink } from 'vue-router';
 <template>
     <div class="aside">
         <div class="headshot">
-            <img src="../assets/headshot.jpeg" alt="">
+            <img src="/images/headshot.jpeg" alt="">
         </div>
         <ul>
-            <li><RouterLink to="/likemusic">我的喜欢</RouterLink></li>
-            <li><RouterLink to="/addmusic">添加歌单</RouterLink></li>
+            <li><RouterLink to="/songlist">歌单主页</RouterLink></li>
+            <li><RouterLink to="/musiclike">我的喜欢</RouterLink></li>
+            <li><RouterLink to="/addmusic">歌曲列表</RouterLink></li>
             <li><RouterLink to="/musictalk">音乐评论</RouterLink></li>
         </ul>
     </div>
@@ -19,7 +20,7 @@ import { RouterLink } from 'vue-router';
     .aside{
         width: 20%;
         height: 96%;
-        background-color: cadetblue;
+        background-color: rgba(0,0,0,0.5);
         border-radius: 20px 0 0 20px;
         margin: 1% 0 1% 1%;
         .headshot{
@@ -43,12 +44,17 @@ import { RouterLink } from 'vue-router';
             text-align: center;
                 a{
                 display: block;
-                width: 100%;
+                width: 90%;
                 height: 50px;
                 color: #fff;
+                margin-left: 5%;
+                border-radius: 20px;
                 text-decoration: none;
                 }
             }
         }
+    }
+    .router-link-active{
+        background-color: rgb(247, 42, 42);
     }
 </style>

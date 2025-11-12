@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import HomePageAside from './components/HomePageAside.vue';
 import HomePageContent from './components/HomePageContent.vue';
+import ButtomApiBtn from './components/ButtomApiBtn.vue';
 </script>
 
 <template>
@@ -9,6 +10,9 @@ import HomePageContent from './components/HomePageContent.vue';
       <HomePageAside></HomePageAside>
       <HomePageContent></HomePageContent>
     </div>
+  </div>
+  <div class="footer">
+    <ButtomApiBtn></ButtomApiBtn>
   </div>
 </template>
 
@@ -23,7 +27,9 @@ import HomePageContent from './components/HomePageContent.vue';
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 745px;
+    height: 765px;
+    overflow: hidden;
+    background: url('/images/bg.webp') no-repeat center center/cover fixed;
     .main{
       display: flex;
       width: 90%;
@@ -32,4 +38,11 @@ import HomePageContent from './components/HomePageContent.vue';
       background-color: rgb(52, 49, 49);
     }
   }
+  .footer{
+      position: fixed;
+      width: 100%;
+      height: 70px;
+      bottom: 0;
+      z-index: 10;
+    }
 </style>
