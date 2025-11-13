@@ -70,6 +70,20 @@
                 musicStore.LikeMusicList.push(item)
             }
     } 
+    const spliceMusic = (id:number) => {
+        const findMusic = filterSongList.value?.song.find((music:song) => music.id === id)
+        if(findMusic){
+            filterSongList.value!.song = filterSongList.value!.song.filter((music:song) => music.id !== id )
+        }
+    }
+    //向我的喜欢列表中添加歌曲
+    const addLikeMusicList = (music:song) =>{
+        music.like = !music.like
+        const repeatMusic = musicStore.LikeMusicList.some(item => item.id === music.id)
+        if(!repeatMusic && music.like === true){
+            musicStore.LikeMusicList.unshift(music)
+        }
+    }
     //对喜欢列表进行监听并存入本地  
     watch(
         musicStore.LikeMusicList,
@@ -86,6 +100,18 @@
         },{
         deep:true
     })
+    //对歌单列表进行监听
+    watch(
+        songListStore.songLists,
+        () => {
+        localStorage.setItem('songListOne',JSON.stringify( songListStore.songLists))
+        },{
+            deep:true
+        }
+    )
+
+
+    //目前存在问题是爱心不同步
 </script>
 
 <template>
@@ -112,10 +138,11 @@
                     <td>专辑</td>
                     <td>喜欢</td>
                     <td>时长</td>
+                    <td>操作</td>
                 </tr>
                 <tr 
                 v-for="(music,index) in filterSongList?.song" 
-                v-if="musicStore.LikeMusicList.length !== 0"
+                v-if="filterSongList?.song.length !== 0"
                 :key="index"
                 >
                     <td>{{index + 1 }}</td>
@@ -131,12 +158,19 @@
                         </div>
                     </td>
                     <td>{{ music.name }}</td>
-                    <td><img  @click="clearMusicLike(music.id)" src="/images/hongaixin.svg" alt=""></td>
+                    <td>
+                         <img 
+                            @click="addLikeMusicList(music)" 
+                            :src="`${music.like || false ? '/images/hongaixin.svg':'/images/aixin.png'}`" 
+                            alt="喜欢"
+                        >
+                    </td>
                     <td>{{ music.time }}</td>
+                    <td><img @click="spliceMusic(music.id)" src="/images/chacha.png" alt=""></td>
                 </tr>
                 <tr v-else class="nothingMusic">
                     <td>
-                        <p>还没有喜欢歌曲哦~快去添加吧</p>
+                        <p>歌单还没有歌曲哦~快去添加吧</p>
                         <p><img src="/images/a-Group46.png" alt=""></p>
                     </td>
                 </tr>
@@ -186,7 +220,6 @@
         }
         .likeList{
             width: 100%;
-            height: 100%;
             ul{
                 width: 100%;
                 height: 40px;
@@ -205,7 +238,6 @@
             }
             table{
                 width: 90%;
-                height: 100%;
                 margin: 10px 5%;
                 .musicTitle{
                     height: 30px;
@@ -218,6 +250,9 @@
                     height: 50px;
                     line-height: 50px;
                     margin-bottom: 10px;
+                    &:not(:first-child):hover{
+                        background-color: rgba(255,255,255,0.1);
+                    }
                     :first-child{
                         flex: 1;
                         text-align: center;
@@ -278,13 +313,26 @@
                             cursor: pointer;
                         }
                     }
+                    :nth-child(5){
+                        flex: 1;
+                        text-align: center;
+                    }
                     :last-child{
                         flex: 1;
                         text-align: center;
                     }
+                    img{
+                        width: 25px;
+                        height: 25px;
+                        margin-top: 10px;
+                        cursor: pointer;
+                    }
                 }
                 .nothingMusic{
                     height: 300px;
+                    &:hover{
+                        background-color: rgba(0,0,0,0.0) !important;
+                    }
                     img{
                         width: 200px;
                         height: 200px;
